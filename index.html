@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infográfico Comparativo Detalhado</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fce7f3;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 40vh;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .kpi-card {
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            padding: 1.5rem;
+            text-align: center;
+            border-left: 5px solid #FF80AB;
+        }
+        .flow-node {
+            background-color: white;
+            border: 2px solid #FF0077;
+            color: #1E293B;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+    </style>
+</head>
+<body class="text-slate-800">
+
+    <div class="container mx-auto p-4 md:p-8">
+
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-slate-900 mb-2">Conectando Pessoas e Oportunidades</h1>
+            <p class="text-lg text-slate-600">Um comparativo detalhado entre o perfil dos jovens de Belo Horizonte e o mercado de cursos de programação.</p>
+        </header>
+
+        <main class="space-y-16">
+
+            <section id="publico-alvo">
+                <h2 class="text-2xl md:text-3xl font-bold text-center mb-8">O Perfil da Audiência em Belo Horizonte</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                    <div class="kpi-card">
+                        <p class="text-4xl font-bold text-[#FF80AB]">23</p>
+                        <p class="text-slate-500 mt-2">Pessoas Analisadas</p>
+                    </div>
+                    <div class="kpi-card">
+                        <p class="text-4xl font-bold text-[#FF80AB]">22.74</p>
+                        <p class="text-slate-500 mt-2">Idade Média</p>
+                    </div>
+                    <div class="kpi-card">
+                        <p class="text-4xl font-bold text-[#FF80AB]">R$ 9.263,96</p>
+                        <p class="text-slate-500 mt-2">Salário Médio</p>
+                    </div>
+                </div>
+                <div class="mt-12 bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-xl font-semibold text-center mb-4">Profissões e Salários do Público-Alvo</h3>
+                    <p class="text-center text-slate-600 mb-6">A maioria dos jovens em Belo Horizonte atua em profissões que possuem grande afinidade com o mundo da tecnologia. O gráfico abaixo ilustra a diversidade de salários e o poder de compra de cada grupo profissional.</p>
+                    <div class="chart-container">
+                        <canvas id="professionsChart"></canvas>
+                    </div>
+                </div>
+                <div class="mt-8 bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-xl font-semibold text-center mb-4">Salário Médio por Profissão</h3>
+                    <p class="text-center text-slate-600 mb-6">A visualização do salário médio por profissão ajuda a entender o potencial de investimento em capacitação de cada grupo.</p>
+                    <div class="chart-container">
+                        <canvas id="salaryBarChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <section id="mercado-cursos">
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h2 class="text-2xl md:text-3xl font-bold text-center mb-4">Oportunidades no Mercado de Cursos</h2>
+                    <p class="text-center text-slate-600 mb-8 max-w-3xl mx-auto">Analisamos o mercado de cursos para entender o que é oferecido em relação ao preço e duração. A maioria dos cursos se concentra em preços mais acessíveis e durações curtas a médias, com exceção de Bootcamps.</p>
+                    <div class="chart-container h-[50vh] max-h-[500px]">
+                        <canvas id="marketScatterChart"></canvas>
+                    </div>
+                </div>
+                 <div class="mt-8 bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-xl font-semibold text-center mb-4">Preço Médio dos Cursos por Nível</h3>
+                    <p class="text-center text-slate-600 mb-6">O preço dos cursos varia bastante de acordo com o nível de complexidade, sendo os cursos avançados mais caros, como o Bootcamp.</p>
+                    <div class="chart-container">
+                        <canvas id="priceByLevelChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <section id="comparativo-final">
+                 <h2 class="text-2xl md:text-3xl font-bold text-center mb-8">O Match Perfeito: Audiência vs. Oferta</h2>
+                 <p class="text-center text-slate-600 mb-8 max-w-3xl mx-auto">Para determinar o melhor tipo de curso, comparamos as características da nossa audiência (perfil médio) com a média dos cursos. O gráfico a seguir mostra o quão bem a oferta se alinha com o perfil e o que é priorizado em cada modalidade.</p>
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="chart-container">
+                        <canvas id="radarChart"></canvas>
+                    </div>
+                </div>
+                <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="flow-node">
+                        <h3 class="font-bold text-lg mb-2">Trilha de Análise de Dados e IA</h3>
+                        <p class="text-sm">Ideal para: `Analista`, `Professor`</p>
+                        <div class="my-2 text-[#FF80AB]">↓</div>
+                        <p class="text-sm font-semibold">Curso de Análise de Dados (R$ 600)</p>
+                        <div class="my-2 text-[#FF80AB]">↓</div>
+                        <p class="text-sm font-semibold">Fundamentos de Python (R$ 1.500)</p>
+                        <div class="my-2 text-[#FF80AB]">↓</div>
+                        <p class="text-sm font-semibold">Curso de Machine Learning (R$ 1.800)</p>
+                    </div>
+                    <div class="flow-node">
+                        <h3 class="font-bold text-lg mb-2">Trilha de Engenharia e Desenvolvimento Web</h3>
+                        <p class="text-sm">Ideal para: `Engenheiro`, `Desenvolvedor`</p>
+                        <div class="my-2 text-[#FF80AB]">↓</div>
+                        <p class="text-sm font-semibold">Formação Web Full Stack (R$ 2.000)</p>
+                        <div class="my-2 text-[#FF80AB]">↓</div>
+                        <p class="text-sm font-semibold">Bootcamp de Engenharia (R$ 15.000)</p>
+                        <div class="my-2 text-[#FF80AB]">↓</div>
+                        <p class="text-sm font-semibold">Certificação em Cloud (R$ 5.000)</p>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <footer class="text-center mt-16 pt-8 border-t border-slate-200">
+            <p class="text-slate-500">Dados de jovens de Belo Horizonte e cursos de programação, combinados para análise estratégica.</p>
+        </footer>
+
+    </div>
+
+    <script>
+        const bhProfessionData = [
+            { name: 'Professor', count: 6, avg_age: 22.50, avg_salary: 12499.80 },
+            { name: 'Engenheiro', count: 4, avg_age: 23.00, avg_salary: 8864.11 },
+            { name: 'Advogado', count: 3, avg_age: 23.33, avg_salary: 6807.59 },
+            { name: 'Desenvolvedor', count: 3, avg_age: 25.33, avg_salary: 5664.70 },
+            { name: 'Analista', count: 2, avg_age: 21.50, avg_salary: 7755.49 },
+            { name: 'Designer', count: 2, avg_age: 23.50, avg_salary: 11150.51 },
+            { name: 'Vendedor', count: 2, avg_age: 20.00, avg_salary: 7255.13 },
+            { name: 'Médico', count: 1, avg_age: 20.00, avg_salary: 12876.73 }
+        ];
+
+        const courseData = [
+            { name: 'Fundamentos de Python para Data Science', price: 1500, level: 'Iniciante/Intermediário', duration: 6 },
+            { name: 'Formação em Desenvolvimento Web Full Stack', price: 2000, level: 'Iniciante/Intermediário', duration: 10 },
+            { name: 'Curso Completo de Análise de Dados com Power BI', price: 600, level: 'Iniciante', duration: 3 },
+            { name: 'Bootcamps de Engenharia de Software', price: 15000, level: 'Intermediário/Avançado', duration: 6 },
+            { name: 'Introdução à Lógica de Programação', price: 0, level: 'Iniciante', duration: 1 },
+            { name: 'Curso de Machine Learning Aplicado', price: 1800, level: 'Intermediário', duration: 5 },
+            { name: 'Certificação em Cloud Computing (AWS)', price: 5000, level: 'Intermediário/Avançado', duration: 8 }
+        ];
+
+        const palette = {
+            pink1: '#FF80AB',
+            pink2: '#FF4081',
+            pink3: '#FF0077',
+            pink4: '#E91E63',
+            pink5: '#C2185B',
+            text: '#1E293B'
+        };
+
+        function wrapLabel(str, maxWidth = 16) {
+            if (str.length <= maxWidth) {
+                return str;
+            }
+            const words = str.split(' ');
+            const lines = [];
+            let currentLine = '';
+            for (const word of words) {
+                if ((currentLine + word).length > maxWidth && currentLine.length > 0) {
+                    lines.push(currentLine.trim());
+                    currentLine = '';
+                }
+                currentLine += word + ' ';
+            }
+            lines.push(currentLine.trim());
+            return lines;
+        }
+
+        const tooltipTitleCallback = function(tooltipItems) {
+            const item = tooltipItems[0];
+            let label = item.chart.data.labels[item.dataIndex];
+            if (Array.isArray(label)) {
+                return label.join(' ');
+            } else {
+                return label;
+            }
+        };
+
+        const commonChartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    labels: {
+                        color: palette.text,
+                        font: { size: 14 }
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        title: tooltipTitleCallback
+                    },
+                    backgroundColor: 'rgba(30, 41, 59, 0.9)',
+                    titleFont: { size: 14, weight: 'bold' },
+                    bodyFont: { size: 12 },
+                    padding: 10,
+                    cornerRadius: 4,
+                    displayColors: true
+                }
+            },
+            scales: {
+                x: {
+                    ticks: { color: palette.text, font: { size: 12 } },
+                    grid: { display: false }
+                },
+                y: {
+                    ticks: { color: palette.text, font: { size: 12 } },
+                    grid: { color: '#e2e8f0' }
+                }
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const professions = bhProfessionData.sort((a, b) => b.count - a.count);
+            new Chart(document.getElementById('professionsChart'), {
+                type: 'bar',
+                data: {
+                    labels: professions.map(p => wrapLabel(p.name)),
+                    datasets: [{
+                        label: 'Número de Pessoas',
+                        data: professions.map(p => p.count),
+                        backgroundColor: palette.pink3,
+                        borderColor: palette.pink5,
+                        borderWidth: 1
+                    }]
+                },
+                options: { ...commonChartOptions }
+            });
+            
+            const professionsBySalary = [...bhProfessionData].sort((a, b) => b.avg_salary - a.avg_salary);
+            new Chart(document.getElementById('salaryBarChart'), {
+                type: 'bar',
+                data: {
+                    labels: professionsBySalary.map(p => wrapLabel(p.name)),
+                    datasets: [{
+                        label: 'Salário Médio (R$)',
+                        data: professionsBySalary.map(p => p.avg_salary),
+                        backgroundColor: palette.pink4,
+                        borderColor: palette.pink5,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    ...commonChartOptions,
+                    indexAxis: 'y',
+                    scales: {
+                        x: {
+                            ...commonChartOptions.scales.x,
+                            ticks: {
+                                callback: function(value) {
+                                    return 'R$ ' + value.toLocaleString('pt-BR');
+                                }
+                            }
+                        },
+                        y: {
+                            ...commonChartOptions.scales.y,
+                            grid: { display: false }
+                        }
+                    }
+                }
+            });
+
+            const maxPrice = Math.max(...courseData.map(c => c.price));
+            const maxDuration = Math.max(...courseData.map(c => c.duration));
+
+            new Chart(document.getElementById('marketScatterChart'), {
+                type: 'scatter',
+                data: {
+                    datasets: [{
+                        label: 'Cursos',
+                        data: courseData.map(c => ({ x: c.duration, y: c.price, r: 8 })),
+                        backgroundColor: palette.pink1,
+                        pointRadius: 8,
+                        pointHoverRadius: 12
+                    }]
+                },
+                options: {
+                    ...commonChartOptions,
+                    scales: {
+                        x: {
+                            ...commonChartOptions.scales.x,
+                            title: { display: true, text: 'Duração (meses)', color: palette.text, font: { size: 14, weight: '600' } }
+                        },
+                        y: {
+                            ...commonChartOptions.scales.y,
+                            title: { display: true, text: 'Preço (R$)', color: palette.text, font: { size: 14, weight: '600' } },
+                            ticks: {
+                                callback: function(value) {
+                                    return 'R$ ' + value.toLocaleString('pt-BR');
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            
+            const avgPriceByLevel = courseData.reduce((acc, course) => {
+                const level = course.level;
+                if (!acc[level]) {
+                    acc[level] = { sum: 0, count: 0 };
+                }
+                acc[level].sum += course.price;
+                acc[level].count++;
+                return acc;
+            }, {});
+
+            const avgPrices = Object.keys(avgPriceByLevel).map(level => ({
+                level: level,
+                avgPrice: avgPriceByLevel[level].sum / avgPriceByLevel[level].count
+            })).sort((a,b) => a.avgPrice - b.avgPrice);
+            
+            new Chart(document.getElementById('priceByLevelChart'), {
+                type: 'bar',
+                data: {
+                    labels: avgPrices.map(item => wrapLabel(item.level)),
+                    datasets: [{
+                        label: 'Preço Médio (R$)',
+                        data: avgPrices.map(item => item.avgPrice),
+                        backgroundColor: palette.pink3,
+                        borderColor: palette.pink5,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    ...commonChartOptions,
+                    scales: {
+                        y: {
+                            ...commonChartOptions.scales.y,
+                            ticks: {
+                                callback: function(value) {
+                                    return 'R$ ' + value.toLocaleString('pt-BR');
+                                }
+                            },
+                            title: { display: true, text: 'Preço Médio (R$)', color: palette.text, font: { size: 14, weight: '600' } }
+                        }
+                    }
+                }
+            });
+
+            new Chart(document.getElementById('radarChart'), {
+                type: 'radar',
+                data: {
+                    labels: ['Custo Acessível', 'Habilidades Essenciais', 'Duração Curta', 'Alta Demanda'],
+                    datasets: [
+                        {
+                            label: 'Perfil da Audiência',
+                            data: [10, 8, 9, 7],
+                            backgroundColor: 'rgba(255, 128, 171, 0.4)',
+                            borderColor: '#FF80AB',
+                            pointBackgroundColor: '#FF80AB',
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: '#FF80AB'
+                        },
+                        {
+                            label: 'Média dos Cursos',
+                            data: [8, 9, 7, 9],
+                            backgroundColor: 'rgba(255, 0, 119, 0.4)',
+                            borderColor: '#FF0077',
+                            pointBackgroundColor: '#FF0077',
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: '#FF0077'
+                        }
+                    ]
+                },
+                options: {
+                    ...commonChartOptions,
+                    scales: {
+                        r: {
+                            angleLines: {
+                                color: '#e2e8f0'
+                            },
+                            grid: {
+                                color: '#e2e8f0'
+                            },
+                            pointLabels: {
+                                font: {
+                                    size: 14,
+                                    weight: 'bold'
+                                },
+                                color: palette.text
+                            },
+                            ticks: {
+                                display: false
+                            }
+                        }
+                    },
+                    plugins: {
+                        ...commonChartOptions.plugins,
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': ' + context.formattedValue;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
